@@ -11,3 +11,7 @@
     border-color: #980C33;
     color: white;
 }
+.ButtonHeader a{
+    text-decoration: none;
+    color: white;
+}
