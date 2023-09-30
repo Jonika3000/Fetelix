@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import Slider from "../../../components/Slider/Slider";
-import "./HomePage.css"
+import "./HomePage.css";
 import axios from "axios";
 
 export interface IGenre{
