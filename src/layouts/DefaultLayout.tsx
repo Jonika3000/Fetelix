@@ -1,11 +1,15 @@
-import { Outlet } from "react-router-dom"; 
+import { Outlet } from "react-router-dom";
 import Header from "../components/Header/Header";
+import Footer from "../components/Footer/Footer";
 
-let DefaultLayout = ()=>{
-    return(
+let DefaultLayout = () => {
+    return (
         <>
-            <Header/>
-            <Outlet/>
+            <Header />
+            <div style={{ minHeight: "40vh" }}>
+                <Outlet />
+            </div>
+            <Footer />
         </>
     )
 }

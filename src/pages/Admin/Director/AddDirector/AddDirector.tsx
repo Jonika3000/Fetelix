@@ -2,16 +2,16 @@ import { ChangeEvent, useState } from "react";
 import { Button, Form } from "react-bootstrap";
 import http from "../../../../http";
 
-export interface actor {
+export interface Director {
     name: string,
     birthday: string,
     image: File | null,
     placeOfBirth: string
 }
 
-const AddActor = () => {
+const AddDirector = () => {
     const [validated, setValidated] = useState(false);
-    const [actor, setActor] = useState<actor>({
+    const [director, setDirector] = useState<Director>({
         name: "",
         birthday: "",
         image: null,
@@ -20,7 +20,7 @@ const AddActor = () => {
     const PostDataAsync = async () => {
         try {
             await http
-                .post<actor>("http://localhost:8080/api/actor", actor, {
+                .post<Director>("api/director", director, {
                     headers: {
                         "Content-Type": "multipart/form-data"
                     }
@@ -32,7 +32,7 @@ const AddActor = () => {
     }
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = event.target;
-        setActor((prevstate) => ({
+        setDirector((prevstate) => ({
             ...prevstate,
             [name]: value
         }))
@@ -47,7 +47,7 @@ const AddActor = () => {
             return;
         }
         await PostDataAsync();
-        setActor({
+        setDirector({
             name: "",
             birthday: "",
             image: null,
@@ -59,12 +59,12 @@ const AddActor = () => {
     return (
         <>
             <div className="container">
-                <label>Add actor</label>
+                <label>Add director</label>
                 <p></p>
                 <Form noValidate validated={validated} onSubmit={handleSubmit} style={{ margin: "0 auto" }}>
                     <Form.Group>
                         <Form.Label>Name</Form.Label>
-                        <Form.Control value={actor.name}
+                        <Form.Control value={director.name}
                             type="text"
                             placeholder="enter actor name"
                             name="name"
@@ -73,7 +73,7 @@ const AddActor = () => {
                     </Form.Group>
                     <Form.Group>
                         <Form.Label>Birthday</Form.Label>
-                        <Form.Control value={actor.birthday}
+                        <Form.Control value={director.birthday}
                             type="date"
                             placeholder="enter actor birthday"
                             name="birthday"
@@ -84,7 +84,7 @@ const AddActor = () => {
                         <Form.Label>Place Of Birth</Form.Label>
                         <Form.Control
                             type="text"
-                            value={actor.placeOfBirth}
+                            value={director.placeOfBirth}
                             placeholder="enter actor place of birth"
                             onChange={handleChange}
                             name="placeOfBirth"
@@ -100,8 +100,8 @@ const AddActor = () => {
                             onChange={(event: ChangeEvent<HTMLInputElement>) => {
                                 const file = event.target.files?.[0];
                                 if (file) {
-                                    setActor({
-                                        ...actor,
+                                    setDirector({
+                                        ...director,
                                         image: file
                                     });
                                 }
@@ -115,4 +115,4 @@ const AddActor = () => {
     )
 }
 
-export default AddActor;
+export default AddDirector;

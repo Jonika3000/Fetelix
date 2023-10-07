@@ -1,6 +1,6 @@
-import axios, { formToJSON } from "axios";
 import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import { Button, Form } from "react-bootstrap";
+import http from "../../../../http";
 
 export interface IDeleteActor {
     id: number,
@@ -21,7 +21,7 @@ const DeleteActor = () => {
     const [allActors, setActors] = useState<IDeleteActor[] | undefined>(undefined);
 
     useEffect(() => {
-        axios.get<IDeleteActor[]>('api/actor').
+        http.get<IDeleteActor[]>('api/actor').
             then(resp => {
                 setActors(resp.data);
             }).catch((error) => {
@@ -40,7 +40,7 @@ const DeleteActor = () => {
     }
     const DeleteDataAsync = async () => { 
         try{
-          await  axios.delete('api/actor/delete' + actor.id);
+          await http.delete('api/actor/delete' + actor.id);
             setActor({
                 id: 0,
                 name: "", 

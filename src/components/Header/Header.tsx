@@ -13,7 +13,7 @@ let Header = () => {
                         <ul className="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
                             <li><Link to='/'  className="nav-link px-2 link-secondary">Home</Link></li>
                             <li><a href="#" className="nav-link px-2 link-dark">Series</a></li>
-                            <li><a href="#" className="nav-link px-2 link-dark">Movies</a></li>
+                            <li><Link to="movies/all" className="nav-link px-2 link-dark">Movies</Link></li>
                             <li><a href="#" className="nav-link px-2 link-dark">Pricing</a></li>
                             <li><a href="#" className="nav-link px-2 link-dark">About</a></li>
                         </ul>

@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import Slider from "../../../components/Slider/Slider";
-import "./HomePage.css";
-import axios from "axios";
+import "./HomePage.css"; 
+import http from "../../../http";
 
 export interface IGenre{
     id:number
@@ -10,7 +10,7 @@ export interface IGenre{
 const HomePage = () => {
     const [allGenres, setAllGenres] = useState<IGenre[]>([]);
     useEffect(()=>{
-        axios.get<IGenre[]>('api/genre').
+        http.get<IGenre[]>('api/genre').
         then(resp => {
             setAllGenres(resp.data);
         }).catch((error) => {

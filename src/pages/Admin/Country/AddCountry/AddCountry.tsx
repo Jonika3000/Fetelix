@@ -1,8 +1,15 @@
 import { useState } from "react";
 import { Button, Form } from "react-bootstrap";
 import http from "../../../../http";
- 
-const AddGenre = () => {
+import Select from 'react-select';
+import { countries } from "../../../../types/CountriesData";
+
+const countryOptions = countries.map(country => ({
+    value: country.name,
+    label: country.name
+}));
+
+const AddCountry = () => {
     const [validated, setValidated] = useState(false);
     const [genre, setGenre] = useState<string>("");
 
@@ -19,11 +26,13 @@ const AddGenre = () => {
             console.log(error);
         }
     }
-    const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        const { value } = event.target;
-        setGenre(value);
-    }
-
+    const [selectedOption, setSelectedOption] = useState<any>(null);
+    
+      
+    console.log(selectedOption);
+    const  handleChange = (selectedOption: any) => {
+        setSelectedOption(selectedOption); 
+      };
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         const form = event.currentTarget;
         event.preventDefault();
@@ -35,13 +44,18 @@ const AddGenre = () => {
         await PostDataAsync();
         setGenre("");
         form.reset();
-    }
+    } 
 
     return (
         <>
             <div className="container">
                 <label>Add genre</label>
                 <p></p>
+                <Select
+                    value={selectedOption}
+                    options={countryOptions} // Передаем массив объектов с опциями
+                    onChange={handleChange}
+                />
                 <Form noValidate validated={validated} onSubmit={handleSubmit} style={{ margin: "0 auto" }}>
                     <Form.Group>
                         <Form.Label>Genre name</Form.Label>
@@ -51,7 +65,7 @@ const AddGenre = () => {
                             name="name"
                             required
                             onChange={handleChange} />
-                    </Form.Group>  
+                    </Form.Group>
                     <Button type="submit" style={{ marginTop: "2rem" }}>Save</Button>
                 </Form>
             </div>
@@ -59,4 +73,4 @@ const AddGenre = () => {
     )
 }
 
-export default AddGenre;
+export default AddCountry;

@@ -1,6 +1,6 @@
-import axios from "axios";
 import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import { Button, Form } from "react-bootstrap";
+import http from "../../../../http";
 export interface IEditActor {
     id: number,
     name: string,
@@ -23,7 +23,7 @@ const EditActor = () => {
     const [selectedItemId, setSelectedItemId] = useState<number | null>(null);
 
     useEffect(() => {
-        axios
+        http
             .get<IEditActor[]>("api/actor/")
             .then((response) => {
                 SetAllItems(response.data);
@@ -43,7 +43,7 @@ const EditActor = () => {
         formData.append("birthday", EditItem.birthday);
         formData.append("placeOfBirth", EditItem.placeOfBirth);
         try {
-            await axios
+            await http
                 .post("api/actor/edit/" + EditItem.id, formData, {
                     headers: {
                         "Content-Type": "multipart/form-data"

@@ -1,6 +1,6 @@
-import axios, { formToJSON } from "axios";
 import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import { Button, Form } from "react-bootstrap";
+import http from "../../../../http";
 
 export interface IDeleteGenre {
     id: number,
@@ -15,7 +15,7 @@ const DeleteGenre = () => {
     const [allGenres, setGenres] = useState<IDeleteGenre[] | undefined>(undefined);
 
     useEffect(() => {
-        axios.get<IDeleteGenre[]>('api/genre').
+        http.get<IDeleteGenre[]>('api/genre').
             then(resp => {
                 setGenres(resp.data);
             }).catch((error) => {
@@ -34,7 +34,7 @@ const DeleteGenre = () => {
     }
     const DeleteDataAsync = async () => { 
         try{
-          await  axios.delete('api/genre/delete' + genre.id);
+          await http.delete('api/genre/delete' + genre.id);
             setGenre({
                 id: 0,
                 name: "" 
