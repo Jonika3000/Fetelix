@@ -20,7 +20,7 @@ const AddActor = () => {
     const PostDataAsync = async () => {
         try {
             await http
-                .post<actor>("http://localhost:8080/api/actor", actor, {
+                .post<actor>("api/actor", actor, {
                     headers: {
                         "Content-Type": "multipart/form-data"
                     }

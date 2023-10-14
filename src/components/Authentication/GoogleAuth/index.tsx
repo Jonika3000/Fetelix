@@ -1,23 +1,29 @@
 import { useGoogleLogin } from "@react-oauth/google";
 import http from "../../../http";
-
+import { useDispatch } from "react-redux"; 
+import { IGoogleAuth, ITokenResponse } from "./types";
+import { useNavigate } from "react-router-dom";
+import { LoginUserAction } from "../../../store/actions/AuthActions";
+ 
 const GoogleAuth = ({ text }: { text: string }) => {
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+
     const onGoogleRequest = useGoogleLogin({
-        onSuccess: tokenResponse => {
-            console.log("Auth token info", tokenResponse);
-            http
-                .post(
-                    `api/account/google`,
-                    {
-                        headers: {
-                            Authorization: `Bearer ${tokenResponse.access_token}`,
-                            Accept: "application/json",
-                        },
-                    }
-                )
-                .then((res) => {
-                    console.log("Google user info", res);
-                });
+        onSuccess: async tokenResponse => {
+            const { access_token } = tokenResponse;
+            const googleAuth: IGoogleAuth = {
+                access_token
+            }; 
+            try {
+                const result = await http
+                    .post<ITokenResponse>("/api/account/google", googleAuth);
+                const { token } = result.data;
+                LoginUserAction(dispatch, token);
+                navigate('/');
+            } catch (e) {
+                console.log("Server is bad", e);
+            } 
         },
     });
     return (

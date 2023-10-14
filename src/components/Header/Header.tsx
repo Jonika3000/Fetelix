@@ -1,7 +1,19 @@
 import { Link } from 'react-router-dom';
 import Logo from '../../assets/images/Logo.png';
 import "./Header.css"
+import { useDispatch, useSelector } from 'react-redux';
+import { AuthUserActionType, IAuthUser } from '../Authentication/GoogleAuth/types'; 
+import http from '../../http';
+
 let Header = () => {
+    const dispatch = useDispatch();
+    const { isAuth, user } = useSelector((store: any) => store.auth as IAuthUser);
+    const logout = () => {
+        delete http.defaults.headers.common["Authorization"];
+        localStorage.removeItem("token");
+        dispatch({ type: AuthUserActionType.LOGOUT_USER });
+    }
+
     return (
         <>
             <div className="Header">
@@ -11,11 +23,38 @@ let Header = () => {
                             <img width={30} height={30} src={Logo} />
                         </a>
                         <ul className="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
-                            <li><Link to='/'  className="nav-link px-2 link-secondary">Home</Link></li>
+                            <li><Link to='/' className="nav-link px-2 link-secondary">Home</Link></li>
                             <li><a href="#" className="nav-link px-2 link-dark">Series</a></li>
                             <li><Link to="movies/all" className="nav-link px-2 link-dark">Movies</Link></li>
                             <li><a href="#" className="nav-link px-2 link-dark">Pricing</a></li>
                             <li><a href="#" className="nav-link px-2 link-dark">About</a></li>
+                            {isAuth ? (
+                                <>
+                                    <img src={`${user?.image}`} alt="avatar" width={50} />
+                                    <li>
+                                        <Link
+                                            className="nav-link px-2 link-dark"
+                                            aria-current="page"
+                                            to="/profile"
+                                        >
+                                            {user?.name}
+                                        </Link>
+                                    </li>
+                                    <li>
+                                        <Link
+                                        className="nav-link px-2 link-dark"
+                                            aria-current="page"
+                                            to="/logout"
+                                            onClick={(e) => {
+                                                e.preventDefault();
+                                                logout();
+                                            }}
+                                        >
+                                            logout
+                                        </Link>
+                                    </li>
+                                </>
+                            ) : null}
                         </ul>
                         <div className="col-md-3 text-end">
                             <button type="button" className="ButtonHeader"><Link to='login'>Login</Link></button>
