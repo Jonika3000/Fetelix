@@ -9,11 +9,7 @@ const AddGenre = () => {
     const PostDataAsync = async () => {
         try {
             await http
-                .post<string>("http://localhost:8080/api/genre", genre, {
-                    headers: {
-                        "Content-Type": "multipart/form-data"
-                    }
-                });
+                .post<string>("api/genre", genre);
         }
         catch (error: any) {
             console.log(error);

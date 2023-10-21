@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 import Logo from '../../assets/images/Logo.png';
 import "./Header.css"
 import { useDispatch, useSelector } from 'react-redux';
-import { AuthUserActionType, IAuthUser } from '../Authentication/GoogleAuth/types'; 
+import { AuthUserActionType, IAuthUser } from '../Authentication/GoogleAuth/types';
 import http from '../../http';
 
 let Header = () => {
@@ -28,38 +28,39 @@ let Header = () => {
                             <li><Link to="movies/all" className="nav-link px-2 link-dark">Movies</Link></li>
                             <li><a href="#" className="nav-link px-2 link-dark">Pricing</a></li>
                             <li><a href="#" className="nav-link px-2 link-dark">About</a></li>
-                            {isAuth ? (
+                        </ul>
+                        <div className="col-md-3 text-end" style={{ display: 'flex', alignItems: 'center' }}>
+                            {!isAuth ? (
                                 <>
-                                    <img src={`${user?.image}`} alt="avatar" width={50} />
-                                    <li>
-                                        <Link
-                                            className="nav-link px-2 link-dark"
-                                            aria-current="page"
-                                            to="/profile"
-                                        >
-                                            {user?.name}
-                                        </Link>
-                                    </li>
-                                    <li>
-                                        <Link
-                                        className="nav-link px-2 link-dark"
-                                            aria-current="page"
-                                            to="/logout"
-                                            onClick={(e) => {
-                                                e.preventDefault();
-                                                logout();
-                                            }}
-                                        >
-                                            logout
-                                        </Link>
-                                    </li>
+                                    <button type="button" className="ButtonHeader"><Link to='login'>Login</Link></button>
+                                    <button type="button" className="ButtonHeader"><Link to='register'>Sign-up</Link></button>
                                 </>
                             ) : null}
-                        </ul>
-                        <div className="col-md-3 text-end">
-                            <button type="button" className="ButtonHeader"><Link to='login'>Login</Link></button>
-                            <button type="button" className="ButtonHeader"><Link to='register'>Sign-up</Link></button>
+                            {isAuth ? (
+                                <>
+                                    <img src={`${user?.image}`} alt="avatar" className='avatar' width={50} />
+                                    <Link
+                                        className="nav-link px-2 link-dark"
+                                        aria-current="page"
+                                        to="/profile"
+                                    >
+                                        {user?.name}
+                                    </Link>
+                                    <Link
+                                        className="nav-link px-2 link-dark"
+                                        aria-current="page"
+                                        to="/logout"
+                                        onClick={(e) => {
+                                            e.preventDefault();
+                                            logout();
+                                        }}
+                                    >
+                                        logout
+                                    </Link>
+                                </>
+                            ) : null}
                         </div>
+
                     </header>
                 </div>
             </div>
