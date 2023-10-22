@@ -1,26 +1,26 @@
 import { ChangeEvent, useState } from "react";
-import { Button, Form } from "react-bootstrap";
+import { Form } from "react-bootstrap";
 import http from "../../../../http";
 
-export interface actor {
+export interface IActor {
     name: string,
     birthday: string,
     image: File | null,
-    placeOfBirth: string
+    place_of_birth: string
 }
 
 const AddActor = () => {
     const [validated, setValidated] = useState(false);
-    const [actor, setActor] = useState<actor>({
+    const [actor, setActor] = useState<IActor>({
         name: "",
         birthday: "",
         image: null,
-        placeOfBirth: ""
+        place_of_birth: ""
     });
     const PostDataAsync = async () => {
         try {
             await http
-                .post<actor>("api/actor", actor, {
+                .post<IActor>("api/actor", actor, {
                     headers: {
                         "Content-Type": "multipart/form-data"
                     }
@@ -51,7 +51,7 @@ const AddActor = () => {
             name: "",
             birthday: "",
             image: null,
-            placeOfBirth: "" 
+            place_of_birth: "" 
         });
         form.reset();
     }
@@ -77,6 +77,7 @@ const AddActor = () => {
                             type="date"
                             placeholder="enter actor birthday"
                             name="birthday"
+                            max={new Date().toISOString().slice(0, 10)}
                             required
                             onChange={handleChange} />
                     </Form.Group>
@@ -84,10 +85,10 @@ const AddActor = () => {
                         <Form.Label>Place Of Birth</Form.Label>
                         <Form.Control
                             type="text"
-                            value={actor.placeOfBirth}
+                            value={actor.place_of_birth}
                             placeholder="enter actor place of birth"
                             onChange={handleChange}
-                            name="placeOfBirth"
+                            name="place_of_birth"
                             required />
                     </Form.Group>
                     <Form.Group>
@@ -108,7 +109,7 @@ const AddActor = () => {
                             }}
                         />
                     </Form.Group>
-                    <Button type="submit" style={{ marginTop: "2rem" }}>Save</Button>
+                    <button type="submit" style={{ marginTop: "2rem" }}>Save</button>
                 </Form>
             </div>
         </>

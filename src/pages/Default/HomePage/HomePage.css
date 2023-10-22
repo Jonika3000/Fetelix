@@ -3,3 +3,23 @@
     width: 100%;
     padding-bottom: 40px;
 }
+
+.genresHome ul{
+    list-style: none;
+    font-size: 24px;
+    text-align: center;
+    margin-top: 5vh;
+}
+.genresHome i{
+    color: #980C33;
+}
+.genresHome li:hover{
+    cursor: pointer;
+}
+.hidden-icon {
+    display: none;
+}
+ 
+li:hover .hidden-icon {
+    display: inline;  
+}

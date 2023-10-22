@@ -2,10 +2,11 @@ import { useEffect, useState } from "react";
 import Slider from "../../../components/Slider/Slider";
 import "./HomePage.css"; 
 import http from "../../../http";
+import "bootstrap-icons/font/bootstrap-icons.css";
 
 export interface IGenre{
-    id:number
-    name: string
+    id: number;
+    name: string;
 }
 const HomePage = () => {
     const [allGenres, setAllGenres] = useState<IGenre[]>([]);
@@ -18,7 +19,7 @@ const HomePage = () => {
         });
     },[]);
     const dataGenres = allGenres.length > 0 && allGenres.map((item)=>(
-        <li key={item.id}>item.name</li>
+        <li key={item.id}><i className="bi bi-caret-right-fill hidden-icon" />{item.name}<i className="bi bi-caret-left hidden-icon" /></li> 
     ))
     return (
         <>
@@ -29,8 +30,7 @@ const HomePage = () => {
                 <ul>
                     {dataGenres}
                 </ul>
-            </div>
-            <h1>Hola amigo</h1>
+            </div> 
         </>
     )
 }

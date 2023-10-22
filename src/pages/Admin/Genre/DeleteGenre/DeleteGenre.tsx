@@ -1,5 +1,5 @@
 import { ChangeEvent, FormEvent, useEffect, useState } from "react";
-import { Button, Form } from "react-bootstrap";
+import { Form } from "react-bootstrap";
 import http from "../../../../http";
 
 export interface IDeleteGenre {
@@ -70,7 +70,7 @@ const DeleteGenre = () => {
                             </Form.Select>
                             <Form.Control.Feedback type="invalid">Please select a genre.</Form.Control.Feedback>
                         </Form.Group>
-                        <Button style={{ margin: "0" }} type="submit">Delete</Button>
+                        <button type="submit" style={{ marginTop: "2rem" }}>Save</button>
                     </Form>
                 </div>
             </div>

@@ -1,5 +1,5 @@
 import { ChangeEvent, FormEvent, useEffect, useState } from "react";
-import { Button, Form } from "react-bootstrap";
+import { Form } from "react-bootstrap";
 import http from "../../../../http";
 export interface IEditActor {
     id: number,
@@ -199,9 +199,7 @@ const EditActor = () => {
                                 <img src={URL.createObjectURL(image)} style={{ maxHeight: "100px", maxWidth: "100px", objectFit: "cover" }} /> 
                             )}
                         </div>
-                        <Button variant="primary" type="submit">
-                            Save
-                        </Button>
+                        <button type="submit" style={{ marginTop: "2rem" }}>Save</button>
                     </Form> 
 
                 </div>

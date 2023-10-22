@@ -11,8 +11,9 @@ import EditActor from './pages/Admin/Actor/EditActor/EditActor'
 import AddGenre from './pages/Admin/Genre/AddGenre/AddGenre'
 import DeleteGenre from './pages/Admin/Genre/DeleteGenre/DeleteGenre'
 import NotFoundPage from './pages/Default/NotFound/NotFoundPage'
-import MoviesPage from './pages/Default/MoviesPage/MoviesPage'
-import AddCountry from './pages/Admin/Country/AddCountry/AddCountry'
+import MoviesPage from './pages/Default/MoviesPage/MoviesPage' 
+import AddDirector from './pages/Admin/Director/AddDirector/AddDirector'
+import AddMovie from './pages/Admin/AddMovie/AddMovie'
 
 function App() {
 
@@ -31,8 +32,9 @@ function App() {
           <Route path='delete-actor' element={<DeleteActor/>} />
           <Route path='edit-actor' element={<EditActor/>} />
           <Route path='add-genre' element={<AddGenre/>} />
-          <Route path='delete-genre' element={<DeleteGenre/>} />
-          <Route path='add-country' element={<AddCountry/>} />
+          <Route path='delete-genre' element={<DeleteGenre/>} /> 
+          <Route path='add-director' element={<AddDirector/>}/>
+          <Route path='add-movie' element={<AddMovie/>}/>
         </Route> 
       </Routes>
     </>

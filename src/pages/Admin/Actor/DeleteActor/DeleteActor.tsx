@@ -1,5 +1,5 @@
 import { ChangeEvent, FormEvent, useEffect, useState } from "react";
-import { Button, Form } from "react-bootstrap";
+import { Form } from "react-bootstrap";
 import http from "../../../../http";
 
 export interface IDeleteActor {
@@ -40,7 +40,7 @@ const DeleteActor = () => {
     }
     const DeleteDataAsync = async () => { 
         try{
-          await http.delete('api/actor/delete' + actor.id);
+          await http.delete('api/actor/delete/' + actor.id);
             setActor({
                 id: 0,
                 name: "", 
@@ -79,7 +79,7 @@ const DeleteActor = () => {
                             </Form.Select>
                             <Form.Control.Feedback type="invalid">Please select a actor.</Form.Control.Feedback>
                         </Form.Group>
-                        <Button style={{ margin: "0" }} type="submit">Delete</Button>
+                        <button type="submit" style={{ marginTop: "2rem" }}>Delete</button>
                     </Form>
                 </div>
             </div>

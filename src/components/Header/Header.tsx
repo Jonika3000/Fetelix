@@ -40,23 +40,24 @@ let Header = () => {
                                 <>
                                     <img src={`${user?.image}`} alt="avatar" className='avatar' width={50} />
                                     <Link
-                                        className="nav-link px-2 link-dark"
+                                        className="nav-link px-2 link-dark text-start"
                                         aria-current="page"
                                         to="/profile"
                                     >
                                         {user?.name}
                                     </Link>
-                                    <Link
-                                        className="nav-link px-2 link-dark"
-                                        aria-current="page"
-                                        to="/logout"
-                                        onClick={(e) => {
-                                            e.preventDefault();
-                                            logout();
-                                        }}
-                                    >
-                                        logout
-                                    </Link>
+                                    <button type="button" className="ButtonHeader logout">
+                                        <Link 
+                                            aria-current="page"
+                                            to="/logout"
+                                            onClick={(e) => {
+                                                e.preventDefault();
+                                                logout();
+                                            }}
+                                        >
+                                            logout
+                                        </Link>
+                                    </button>
                                 </>
                             ) : null}
                         </div>

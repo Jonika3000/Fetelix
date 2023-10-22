@@ -1,12 +1,12 @@
 import { ChangeEvent, useState } from "react";
-import { Button, Form } from "react-bootstrap";
+import { Form } from "react-bootstrap";
 import http from "../../../../http";
 
 export interface Director {
     name: string,
     birthday: string,
     image: File | null,
-    placeOfBirth: string
+    place_of_birth: string
 }
 
 const AddDirector = () => {
@@ -15,7 +15,7 @@ const AddDirector = () => {
         name: "",
         birthday: "",
         image: null,
-        placeOfBirth: ""
+        place_of_birth: ""
     });
     const PostDataAsync = async () => {
         try {
@@ -51,7 +51,7 @@ const AddDirector = () => {
             name: "",
             birthday: "",
             image: null,
-            placeOfBirth: "" 
+            place_of_birth: "" 
         });
         form.reset();
     }
@@ -84,7 +84,7 @@ const AddDirector = () => {
                         <Form.Label>Place Of Birth</Form.Label>
                         <Form.Control
                             type="text"
-                            value={director.placeOfBirth}
+                            value={director.place_of_birth}
                             placeholder="enter actor place of birth"
                             onChange={handleChange}
                             name="placeOfBirth"
@@ -108,7 +108,7 @@ const AddDirector = () => {
                             }}
                         />
                     </Form.Group>
-                    <Button type="submit" style={{ marginTop: "2rem" }}>Save</Button>
+                    <button type="submit" style={{ marginTop: "2rem" }}>Save</button>
                 </Form>
             </div>
         </>

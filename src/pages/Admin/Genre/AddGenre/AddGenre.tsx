@@ -1,23 +1,34 @@
 import { useState } from "react";
-import { Button, Form } from "react-bootstrap";
+import { Form } from "react-bootstrap";
 import http from "../../../../http";
  
+export interface IGenre{
+    id:number;
+    name: string;
+}
+
 const AddGenre = () => {
     const [validated, setValidated] = useState(false);
-    const [genre, setGenre] = useState<string>("");
+    const [genre, setGenre] = useState<IGenre>({
+        id:0,
+        name: ""
+    });
 
     const PostDataAsync = async () => {
         try {
             await http
-                .post<string>("api/genre", genre);
+                .post("api/genre", genre);
         }
         catch (error: any) {
             console.log(error);
         }
     }
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        const { value } = event.target;
-        setGenre(value);
+        const { name, value } = event.target;
+        setGenre((prevstate) => ({
+            ...prevstate,
+            [name]: value
+        }))
     }
 
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
@@ -29,7 +40,10 @@ const AddGenre = () => {
             return;
         }
         await PostDataAsync();
-        setGenre("");
+        setGenre({
+            id:0,
+            name: ""
+        });
         form.reset();
     }
 
@@ -41,14 +55,14 @@ const AddGenre = () => {
                 <Form noValidate validated={validated} onSubmit={handleSubmit} style={{ margin: "0 auto" }}>
                     <Form.Group>
                         <Form.Label>Genre name</Form.Label>
-                        <Form.Control value={genre}
+                        <Form.Control value={genre.name}
                             type="text"
                             placeholder="enter genre name"
                             name="name"
                             required
                             onChange={handleChange} />
                     </Form.Group>  
-                    <Button type="submit" style={{ marginTop: "2rem" }}>Save</Button>
+                    <button type="submit" style={{ marginTop: "2rem" }}>Save</button>
                 </Form>
             </div>
         </>
