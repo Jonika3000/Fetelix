@@ -1,9 +1,9 @@
 import { ChangeEvent, useEffect, useState } from "react";
-import http from "../../../http";
+import http from "../../../../http";
 import { Button, Form } from "react-bootstrap";
-import Loading from "../../../components/Loading/Loading";
+import Loading from "../../../../components/Loading/Loading";
 import Select from 'react-select';
-import { countries } from "../../../types/CountriesData";
+import { countries } from "../../../../types/CountriesData";
 
 export interface IMovie {
     id: number;
@@ -16,6 +16,9 @@ export interface IMovie {
     director_id: number;
     slug: string;
     videoPath: File | null;
+    actorsIds: number[];
+    genresIds: number[];
+    images: File[];
 }
 
 export interface IHuman {
@@ -25,7 +28,10 @@ export interface IHuman {
     image: File | null;
     place_of_birth: string;
 }
-
+export interface IGenre {
+    id: number;
+    name: string;
+}
 const AddMovie = () => {
     let [selectedDirector, setSelectedDirector] = useState<IHuman>({
         id: 0,
@@ -38,6 +44,8 @@ const AddMovie = () => {
         value: country.name,
         label: country.name
     }));
+    const [allGenres, setAllGenres] = useState<IGenre[]>([]);
+    const [selectedGenres, setSelectedGenres] = useState<IGenre[]>([]);
     const [selectedOption, setSelectedOption] = useState<any>(null);
     const handleChangeCountry = (selectedOption: any) => {
         setSelectedOption(selectedOption);
@@ -53,13 +61,17 @@ const AddMovie = () => {
         time: 0,
         director_id: 0,
         slug: "",
-        videoPath: null
+        videoPath: null,
+        actorsIds: [],
+        genresIds: [],
+        images: []
     });
     let [validated, setValidated] = useState(false);
     const [allActors, setActors] = useState<IHuman[]>([]);
     const [allDirectors, setDirectors] = useState<IHuman[]>([]);
     const [loading, setLoading] = useState<boolean>(true);
     const [error, setError] = useState("");
+    const [selectedActors, setSelectedActors] = useState<IHuman[]>([]);
 
     useEffect(() => {
         fetchData();
@@ -93,16 +105,24 @@ const AddMovie = () => {
         http.get<IHuman[]>('api/actor').
             then(resp => {
                 setActors(resp.data);
-                http.get<IHuman[]>('api/director').
-                    then(resp => {
-                        setDirectors(resp.data);
-                        setLoading(false);
-                    }).catch((error) => {
-                        setErrorMessage(error);
-                    });
+
             }).catch((error) => {
                 setErrorMessage(error);
             });
+        http.get<IGenre[]>('api/genre').
+            then(resp => {
+                setAllGenres(resp.data); 
+            }).catch((error) => {
+                setErrorMessage(error);
+            });
+        http.get<IHuman[]>('api/director').
+            then(resp => {
+                setDirectors(resp.data);
+
+            }).catch((error) => {
+                setErrorMessage(error);
+            });
+        setLoading(false);
     };
 
     function setErrorMessage(message: any) {
@@ -121,7 +141,9 @@ const AddMovie = () => {
     const dataComboBoxDirectors = allDirectors != undefined && allDirectors.length > 0 && allDirectors.map((item) => (
         <option key={item.id} value={item.id}>{item.name}</option>
     ));
-
+    const dataComboBoxGenres = allGenres != undefined && allGenres.length > 0 && allGenres.map((item) => (
+        <option key={item.id} value={item.id}>{item.name}</option>
+    ));
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         const form = event.currentTarget;
         event.preventDefault();
@@ -130,15 +152,20 @@ const AddMovie = () => {
             setValidated(true);
             return;
         }
-        await PostDataAsync(); 
+        await PostDataAsync();
         form.reset();
-    }
+    } 
+    
     const PostDataAsync = async () => {
         setMovie({
             ...movie,
             director_id: selectedDirector.id,
-            country: selectedOption 
+            country: selectedOption.value,
+            actorsIds: selectedActors.map(actor => actor.id),
+            images: images,
+            genresIds: selectedGenres.map(genre => genre.id)
         });
+        console.log(movie);
         try {
             await http
                 .post<IMovie>("api/movie", movie, {
@@ -160,13 +187,25 @@ const AddMovie = () => {
             });
         }
     }
+
     function ComboBoxChangeActor(event: ChangeEvent<HTMLSelectElement>): void {
         const selectedValue = event.target.value;
         if (selectedValue !== "") {
             const selectedActor = allActors.find(actor => actor.id === parseInt(selectedValue));
             if (selectedActor) {
-                if (!allActors.some(actor => actor.id === selectedActor.id)) {
-                    setActors([...allActors, selectedActor]);
+                if (!selectedActors.some(actor => actor.id === selectedActor.id)) {
+                    setSelectedActors([...selectedActors, selectedActor]);
+                }
+            }
+        }
+    }
+    function ComboBoxChangeGenres(event: ChangeEvent<HTMLSelectElement>): void {
+        const selectedValue = event.target.value;
+        if (selectedValue !== "") {
+            const selectedGenre = allGenres.find(genre => genre.id === parseInt(selectedValue));
+            if (selectedGenre) {
+                if (!selectedGenres.some(genre => genre.id === selectedGenre.id)) {
+                    setSelectedGenres([...selectedGenres, selectedGenre]);
                 }
             }
         }
@@ -179,16 +218,12 @@ const AddMovie = () => {
         }))
     }
     if (!loading) {
-        return (
-            <>
+        return ( 
                 <div style={{ minHeight: "100vh" }}>
                     <div className="CenterContent">
                         <Form noValidate validated={validated} onSubmit={handleSubmit} style={{ margin: "0 auto" }}>
                             <Form.Group className="mb-3">
-                                <Form.Label style={{
-                                    color: 'white',
-                                    fontSize: "30px"
-                                }}>Title</Form.Label>
+                                <Form.Label >Title</Form.Label>
                                 <Form.Control as="textarea"
                                     type="text"
                                     placeholder="Enter movie title"
@@ -203,34 +238,47 @@ const AddMovie = () => {
                                 </Form.Control.Feedback>
                             </Form.Group>
                             <Form.Group className="mb-3" controlId="formItemDirector">
-                                <Form.Label style={{ color: 'white', fontSize: "30px" }}>Select director</Form.Label>
+                                <Form.Label >Select director</Form.Label>
                                 <Form.Select aria-label="Item director" onChange={ComboBoxChangeDirector} required name="FormSelectDirector">
-                                    <option value="">Select...</option>
-                                    {dataComboBoxActors}
-                                </Form.Select>
-                                <Form.Control.Feedback type="invalid">Please select a actor.</Form.Control.Feedback>
-                            </Form.Group>
-                            <Form.Group className="mb-3" controlId="formItemCategory">
-                                <Form.Label style={{ color: 'white', fontSize: "30px" }}>Select actor</Form.Label>
-                                <Form.Select aria-label="Item category" onChange={ComboBoxChangeActor} required name="FormSelectActor">
                                     <option value="">Select...</option>
                                     {dataComboBoxDirectors}
                                 </Form.Select>
                                 <Form.Control.Feedback type="invalid">Please select a actor.</Form.Control.Feedback>
                             </Form.Group>
+                            <Form.Group className="mb-3">
+                                <Form.Label >Select actors</Form.Label>
+                                <Form.Select aria-label="Item category" onChange={ComboBoxChangeActor} required name="FormSelectActor">
+                                    <option value="">Select...</option>
+                                    {dataComboBoxActors}
+                                </Form.Select>
+                                <Form.Control.Feedback type="invalid">Please select a actor.</Form.Control.Feedback>
+                            </Form.Group>
                             <div>
-                                <h2>Selected Actors:</h2>
+                            <Form.Label>Selected Actors:</Form.Label>
                                 <ul>
-                                    {allActors?.map(actor => (
+                                    {selectedActors?.map(actor => (
                                         <li key={actor.id}>{actor.name}</li>
                                     ))}
                                 </ul>
                             </div>
                             <Form.Group className="mb-3">
-                                <Form.Label style={{
-                                    color: 'white',
-                                    fontSize: "30px"
-                                }}>Video</Form.Label>
+                                <Form.Label>Select genres</Form.Label>
+                                <Form.Select onChange={ComboBoxChangeGenres} required name="FormSelectGenres">
+                                    <option value="">Select...</option>
+                                    {dataComboBoxGenres}
+                                </Form.Select>
+                                <Form.Control.Feedback type="invalid">Please select a genres.</Form.Control.Feedback>
+                            </Form.Group>
+                            <div>
+                            <Form.Label>Selected Genres:</Form.Label>
+                                <ul>
+                                    {selectedGenres?.map(genre => (
+                                        <li key={genre.id}>{genre.name}</li>
+                                    ))}
+                                </ul>
+                            </div>
+                            <Form.Group className="mb-3">
+                                <Form.Label >Video</Form.Label>
                                 <Form.Control
                                     type="file"
                                     required
@@ -251,10 +299,7 @@ const AddMovie = () => {
                                 </Form.Control.Feedback>
                             </Form.Group>
                             <Form.Group className="mb-3" controlId="formItemImage">
-                                <Form.Label style={{
-                                    color: 'white',
-                                    fontSize: "30px"
-                                }}>Image main</Form.Label>
+                                <Form.Label >Image main</Form.Label>
                                 <Form.Control
                                     type="file"
                                     required
@@ -299,15 +344,12 @@ const AddMovie = () => {
                                 <Form.Control value={movie.slug}
                                     type="text"
                                     placeholder="enter movie slug"
-                                    name="slug" 
+                                    name="slug"
                                     required
                                     onChange={handleChange} />
                             </Form.Group>
                             <Form.Group className="mb-3" controlId="formItemImages">
-                                <Form.Label style={{
-                                    color: 'white',
-                                    fontSize: "30px"
-                                }}>Images</Form.Label>
+                                <Form.Label >Images</Form.Label>
                                 <Form.Control
                                     type="file"
                                     multiple
@@ -327,10 +369,7 @@ const AddMovie = () => {
                             </Form.Group>
                             {SelectedImages}
                             <Form.Group className="mb-3">
-                                <Form.Label style={{
-                                    color: 'white',
-                                    fontSize: "30px"
-                                }}>Description</Form.Label>
+                                <Form.Label >Description</Form.Label>
                                 <Form.Control as="textarea"
                                     type="text"
                                     placeholder="Enter movie description"
@@ -344,17 +383,17 @@ const AddMovie = () => {
                                     Please enter a item description.
                                 </Form.Control.Feedback>
                             </Form.Group>
+                            <Form.Label>Select country:</Form.Label>
                             <Select
                                 value={selectedOption}
                                 options={countryOptions}
                                 onChange={handleChangeCountry}
                             />
-                            <button type="submit" style={{ marginTop: "2rem" }}>Delete</button>
+                            <button type="submit" style={{ marginTop: "2rem" }}>Create</button>
                         </Form>
 
                     </div>
-                </div>
-            </>
+                </div> 
         )
     }
     else {

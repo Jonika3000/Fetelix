@@ -13,7 +13,7 @@ import DeleteGenre from './pages/Admin/Genre/DeleteGenre/DeleteGenre'
 import NotFoundPage from './pages/Default/NotFound/NotFoundPage'
 import MoviesPage from './pages/Default/MoviesPage/MoviesPage' 
 import AddDirector from './pages/Admin/Director/AddDirector/AddDirector'
-import AddMovie from './pages/Admin/AddMovie/AddMovie'
+import AddMovie from './pages/Admin/Movie/AddMovie/AddMovie'
 
 function App() {
 
