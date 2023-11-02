@@ -66,7 +66,7 @@ const AddDirector = () => {
                         <Form.Label>Name</Form.Label>
                         <Form.Control value={director.name}
                             type="text"
-                            placeholder="enter actor name"
+                            placeholder="enter director name"
                             name="name"
                             required
                             onChange={handleChange} />
@@ -75,7 +75,7 @@ const AddDirector = () => {
                         <Form.Label>Birthday</Form.Label>
                         <Form.Control value={director.birthday}
                             type="date"
-                            placeholder="enter actor birthday"
+                            placeholder="enter director birthday"
                             name="birthday"
                             required
                             onChange={handleChange} />
@@ -85,9 +85,9 @@ const AddDirector = () => {
                         <Form.Control
                             type="text"
                             value={director.place_of_birth}
-                            placeholder="enter actor place of birth"
+                            placeholder="enter director place of birth"
                             onChange={handleChange}
-                            name="placeOfBirth"
+                            name="place_of_birth"
                             required />
                     </Form.Group>
                     <Form.Group>

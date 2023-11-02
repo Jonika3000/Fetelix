@@ -13,7 +13,7 @@ export interface IMovie {
     description: string;
     releaseDate: string;
     time: number;
-    director_id: number;
+    directorId: number;
     slug: string;
     videoPath: File | null;
     actorsIds: number[];
@@ -59,7 +59,7 @@ const AddMovie = () => {
         description: "",
         releaseDate: "",
         time: 0,
-        director_id: 0,
+        directorId: 0,
         slug: "",
         videoPath: null,
         actorsIds: [],
@@ -152,23 +152,23 @@ const AddMovie = () => {
             setValidated(true);
             return;
         }
-        await PostDataAsync();
-        form.reset();
-    } 
-    
-    const PostDataAsync = async () => {
-        setMovie({
-            ...movie,
-            director_id: selectedDirector.id,
+        const model = { ...movie,
+            directorId: selectedDirector.id,
             country: selectedOption.value,
             actorsIds: selectedActors.map(actor => actor.id),
             images: images,
-            genresIds: selectedGenres.map(genre => genre.id)
-        });
-        console.log(movie);
+            genresIds: selectedGenres.map(genre => genre.id)};
+        
+        console.log('hh',model);
+        
+        await PostDataAsync(model);
+        form.reset();
+    } 
+    
+    const PostDataAsync = async (model: IMovie) => { 
         try {
             await http
-                .post<IMovie>("api/movie", movie, {
+                .post<IMovie>("api/movie", model, {
                     headers: {
                         "Content-Type": "multipart/form-data"
                     }
