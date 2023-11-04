@@ -1,0 +1,17 @@
+.movieDiv{
+    width: 33%;
+    height: 250px;
+    background-size: cover;
+    border-radius: 10%;
+    cursor: pointer;
+    display: flex;
+}
+.movieTitle{
+    color: white;
+    align-self: flex-end;
+    margin-left: 1rem;
+}
+ 
+.movieDiv:hover {  
+    box-shadow: rgba(152, 12, 51, 0.25) 0px 30px 60px -12px inset, rgba(152, 12, 51, 0.3) 0px 18px 36px -18px inset;
+}

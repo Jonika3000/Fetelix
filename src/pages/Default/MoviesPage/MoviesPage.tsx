@@ -3,34 +3,37 @@ import http from "../../../http";
 import "./MoviesPage.css"
 import { useEffect, useState } from "react";
 import Loading from "../../../components/Loading/Loading";
+import { APP_ENV } from "../../../env";
 
-export interface Movie {
-    id: number,
-    title: string,
-    image: File | null,
-    description: string,
-    country_id: number,
-    release_date: Date,
-    time: number,
-    director_id: number,
-    slug: string,
-    video_path: string
+export interface IMovie {
+    id: number;
+    title: string;
+    image: string;
+    country: string;
+    description: string;
+    releaseDate: string;
+    time: number;
+    directorId: number;
+    slug: string;
+    videoPath: File | null;
+    actorsIds: number[];
+    genresIds: number[];
+    images: File[];
 }
-
 interface RouteParams {
     [key: string]: string | undefined;
     slug: string;
 }
 
 const MoviesPage = () => {
-    const [allMovies, setAllMovies] = useState<Movie[]>([]);
+    const [allMovies, setAllMovies] = useState<IMovie[]>([]);
     const [loading, setLoading] = useState<boolean>(true);
     const [error, setError] = useState("");
     const { slug } = useParams<RouteParams>();
 
     useEffect(() => {
         const fetchData = async () => {
-            http.get<Movie[]>('api/movie').
+            http.get<IMovie[]>('api/movie').
                 then(resp => {
                     setAllMovies(resp.data);
                     setLoading(false);
@@ -42,7 +45,7 @@ const MoviesPage = () => {
                                 ? "Not Found"
                                 : "An unexpected error occurred";
                     setError(errorMessage);
-                    setLoading(false);  
+                    setLoading(false);
                 });
         };
 
@@ -51,21 +54,20 @@ const MoviesPage = () => {
 
     const dataMovies = allMovies && allMovies.map((item, key) => {
         return (
-            <>
-               
-            </>
+            <div className="movieDiv" style={{ backgroundImage: `url(${APP_ENV.IMAGE_URL}1200_${item.image})` }}>
+                <h4 className="movieTitle">{item.title}</h4>
+            </div>
         );
-    }); 
+    });
 
     if (loading == false && error == "") {
         return (
             <>
-                {dataMovies}
+                <div className="container">{dataMovies}</div>
             </>
         );
-    } 
-    else if (loading == false && error != "")
-    {
+    }
+    else if (loading == false && error != "") {
         <div className="container">
             <h1>{error}</h1>
         </div>
