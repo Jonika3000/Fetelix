@@ -3,23 +3,8 @@ import http from "../../../../http";
 import { Button, Form } from "react-bootstrap";
 import Loading from "../../../../components/Loading/Loading";
 import Select from 'react-select';
-import { countries } from "../../../../types/CountriesData";
-
-export interface IMovie {
-    id: number;
-    title: string;
-    image: File | null;
-    country: string;
-    description: string;
-    releaseDate: string;
-    time: number;
-    directorId: number;
-    slug: string;
-    videoPath: File | null;
-    actorsIds: number[];
-    genresIds: number[];
-    images: File[];
-}
+import { countries } from "../../../../types/CountriesData"; 
+import { IMovie } from "../../../../types/MovieType";
 
 export interface IHuman {
     id: number;

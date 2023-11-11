@@ -14,6 +14,7 @@ import NotFoundPage from './pages/Default/NotFound/NotFoundPage'
 import MoviesPage from './pages/Default/MoviesPage/MoviesPage' 
 import AddDirector from './pages/Admin/Director/AddDirector/AddDirector'
 import AddMovie from './pages/Admin/Movie/AddMovie/AddMovie'
+import MoviePage from './pages/Default/MoviePage/MoviePage'
 
 function App() {
 
@@ -25,6 +26,7 @@ function App() {
           <Route path='login' element={<LoginPage></LoginPage>}/>
           <Route path='register' element={<RegisterPage></RegisterPage>}/>
           <Route path='movies/:slug' element={<MoviesPage></MoviesPage>}/>
+          <Route path='movie/:slug' element={<MoviePage/>}/>
           <Route path='*' element={<NotFoundPage></NotFoundPage>}></Route>
         </Route>
         <Route path='/admin' element={<AdminLayout />}>

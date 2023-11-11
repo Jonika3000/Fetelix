@@ -3,37 +3,23 @@ import http from "../../../http";
 import "./MoviesPage.css"
 import { useEffect, useState } from "react";
 import Loading from "../../../components/Loading/Loading";
-import { APP_ENV } from "../../../env";
-
-export interface IMovie {
-    id: number;
-    title: string;
-    image: string;
-    country: string;
-    description: string;
-    releaseDate: string;
-    time: number;
-    directorId: number;
-    slug: string;
-    videoPath: File | null;
-    actorsIds: number[];
-    genresIds: number[];
-    images: File[];
-}
+import { APP_ENV } from "../../../env"; 
+import { IMovieGet } from "../../../types/MovieType";
+ 
 interface RouteParams {
     [key: string]: string | undefined;
     slug: string;
 }
 
 const MoviesPage = () => {
-    const [allMovies, setAllMovies] = useState<IMovie[]>([]);
+    const [allMovies, setAllMovies] = useState<IMovieGet[]>([]);
     const [loading, setLoading] = useState<boolean>(true);
     const [error, setError] = useState("");
     const { slug } = useParams<RouteParams>();
 
     useEffect(() => {
         const fetchData = async () => {
-            http.get<IMovie[]>('api/movie').
+            http.get<IMovieGet[]>('api/movie').
                 then(resp => {
                     setAllMovies(resp.data);
                     setLoading(false);
