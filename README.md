@@ -1,27 +1,27 @@
-# React + TypeScript + Vite
+This is an online movie viewing project. It is unfinished. Many things were not implemented. Also the code wants a better state, I know about it, sorry.
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Home page:
 
-Currently, two official plugins are available:
+![image](https://github.com/Jonika3000/Fetelix/assets/66825034/fe757d4a-52b0-43f7-b246-724bb46aac8d)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
 
-## Expanding the ESLint configuration
+About page:
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+![image](https://github.com/Jonika3000/Fetelix/assets/66825034/19e93e3f-516c-4cd3-a5cf-6610bbabe221)
 
-- Configure the top-level `parserOptions` property like this:
 
-```js
-   parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-   },
-```
+Movie page:
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+![image](https://github.com/Jonika3000/Fetelix/assets/66825034/218405b2-6d98-4310-a122-f4d5f2fccde5)
+
+
+All movies page:
+
+![image](https://github.com/Jonika3000/Fetelix/assets/66825034/6fb9e34d-cdb9-408c-b07b-e2db63220ffa)
+
+Admin add movie page:
+
+![image](https://github.com/Jonika3000/Fetelix/assets/66825034/3dc1b193-3bff-4062-b3fa-e315d3b8dd46)
+![image](https://github.com/Jonika3000/Fetelix/assets/66825034/91effa48-3625-413c-b75f-c16a61379996)
+
+There are pages for adding/deleting/editing genres, authors, directors, films
