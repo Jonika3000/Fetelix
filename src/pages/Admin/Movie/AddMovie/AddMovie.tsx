@@ -3,7 +3,7 @@ import http from "../../../../http";
 import { Button, Form } from "react-bootstrap";
 import Loading from "../../../../components/Loading/Loading";
 import Select from 'react-select';
-import { countries } from "../../../../types/CountriesData"; 
+import { countries } from "../../../../types/CountriesData";
 import { IMovie } from "../../../../types/MovieType";
 
 export interface IHuman {
@@ -96,7 +96,7 @@ const AddMovie = () => {
             });
         http.get<IGenre[]>('api/genre').
             then(resp => {
-                setAllGenres(resp.data); 
+                setAllGenres(resp.data);
             }).catch((error) => {
                 setErrorMessage(error);
             });
@@ -137,20 +137,20 @@ const AddMovie = () => {
             setValidated(true);
             return;
         }
-        const model = { ...movie,
+        const model = {
+            ...movie,
             directorId: selectedDirector.id,
             country: selectedOption.value,
             actorsIds: selectedActors.map(actor => actor.id),
             images: images,
-            genresIds: selectedGenres.map(genre => genre.id)};
-        
-        console.log('hh',model);
-        
+            genresIds: selectedGenres.map(genre => genre.id)
+        };
+
         await PostDataAsync(model);
         form.reset();
-    } 
-    
-    const PostDataAsync = async (model: IMovie) => { 
+    }
+
+    const PostDataAsync = async (model: IMovie) => {
         try {
             await http
                 .post<IMovie>("api/movie", model, {
@@ -203,7 +203,8 @@ const AddMovie = () => {
         }))
     }
     if (!loading) {
-        return ( 
+        return (
+            <div className="container">
                 <div style={{ minHeight: "100vh" }}>
                     <div className="CenterContent">
                         <Form noValidate validated={validated} onSubmit={handleSubmit} style={{ margin: "0 auto" }}>
@@ -239,7 +240,7 @@ const AddMovie = () => {
                                 <Form.Control.Feedback type="invalid">Please select a actor.</Form.Control.Feedback>
                             </Form.Group>
                             <div>
-                            <Form.Label>Selected Actors:</Form.Label>
+                                <Form.Label>Selected Actors:</Form.Label>
                                 <ul>
                                     {selectedActors?.map(actor => (
                                         <li key={actor.id}>{actor.name}</li>
@@ -255,7 +256,7 @@ const AddMovie = () => {
                                 <Form.Control.Feedback type="invalid">Please select a genres.</Form.Control.Feedback>
                             </Form.Group>
                             <div>
-                            <Form.Label>Selected Genres:</Form.Label>
+                                <Form.Label>Selected Genres:</Form.Label>
                                 <ul>
                                     {selectedGenres?.map(genre => (
                                         <li key={genre.id}>{genre.name}</li>
@@ -378,7 +379,8 @@ const AddMovie = () => {
                         </Form>
 
                     </div>
-                </div> 
+                </div>
+            </div>
         )
     }
     else {

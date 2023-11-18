@@ -2,8 +2,14 @@
     display: flex; 
 } 
 .imageMovie {
-    max-width: 50%;
+    width: 50%;
     height: auto;
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+} 
+ul{
+    list-style: none;
+}
+.DescriptionMovieDiv{
+    margin-top: 2rem;
 }

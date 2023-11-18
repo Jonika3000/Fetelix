@@ -2,7 +2,7 @@ import { ChangeEvent, useState } from "react";
 import { Form } from "react-bootstrap";
 import http from "../../../../http";
 
-export interface Director {
+export interface IDirector {
     name: string,
     birthday: string,
     image: File | null,
@@ -11,7 +11,7 @@ export interface Director {
 
 const AddDirector = () => {
     const [validated, setValidated] = useState(false);
-    const [director, setDirector] = useState<Director>({
+    const [director, setDirector] = useState<IDirector>({
         name: "",
         birthday: "",
         image: null,
@@ -20,7 +20,7 @@ const AddDirector = () => {
     const PostDataAsync = async () => {
         try {
             await http
-                .post<Director>("api/director", director, {
+                .post<IDirector>("api/director", director, {
                     headers: {
                         "Content-Type": "multipart/form-data"
                     }

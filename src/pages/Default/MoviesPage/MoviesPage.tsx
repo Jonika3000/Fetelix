@@ -1,11 +1,11 @@
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import http from "../../../http";
 import "./MoviesPage.css"
 import { useEffect, useState } from "react";
 import Loading from "../../../components/Loading/Loading";
-import { APP_ENV } from "../../../env"; 
+import { APP_ENV } from "../../../env";
 import { IMovieGet } from "../../../types/MovieType";
- 
+
 interface RouteParams {
     [key: string]: string | undefined;
     slug: string;
@@ -41,7 +41,9 @@ const MoviesPage = () => {
     const dataMovies = allMovies && allMovies.map((item, key) => {
         return (
             <div className="movieDiv" style={{ backgroundImage: `url(${APP_ENV.IMAGE_URL}1200_${item.image})` }}>
-                <h4 className="movieTitle">{item.title}</h4>
+                <Link to={"/movie/" + item.slug} className="movieTitle">
+                    <h4 className="movieTitle">{item.title}</h4>
+                </Link >
             </div>
         );
     });
@@ -49,7 +51,9 @@ const MoviesPage = () => {
     if (loading == false && error == "") {
         return (
             <>
-                <div className="container">{dataMovies}</div>
+                <div className="container">
+                    <div className="dataMovies">{dataMovies}</div>
+                </div>
             </>
         );
     }

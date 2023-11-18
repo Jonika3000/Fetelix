@@ -15,6 +15,7 @@ import MoviesPage from './pages/Default/MoviesPage/MoviesPage'
 import AddDirector from './pages/Admin/Director/AddDirector/AddDirector'
 import AddMovie from './pages/Admin/Movie/AddMovie/AddMovie'
 import MoviePage from './pages/Default/MoviePage/MoviePage'
+import { AboutPage } from './pages/Default/About/AboutPage'
 
 function App() {
 
@@ -24,6 +25,7 @@ function App() {
         <Route path='/' element={<DefaultLayout />}>
           <Route index element={<HomePage />} />
           <Route path='login' element={<LoginPage></LoginPage>}/>
+          <Route path='about' element={<AboutPage></AboutPage>}/>
           <Route path='register' element={<RegisterPage></RegisterPage>}/>
           <Route path='movies/:slug' element={<MoviesPage></MoviesPage>}/>
           <Route path='movie/:slug' element={<MoviePage/>}/>

@@ -27,7 +27,7 @@ let Header = () => {
                             <li><a href="#" className="nav-link px-2 link-dark">Series</a></li>
                             <li><Link to="movies/all" className="nav-link px-2 link-dark">Movies</Link></li>
                             <li><a href="#" className="nav-link px-2 link-dark">Pricing</a></li>
-                            <li><a href="#" className="nav-link px-2 link-dark">About</a></li>
+                            <li><Link to="about" className="nav-link px-2 link-dark">About</Link></li>
                         </ul>
                         <div className="col-md-3 text-end" style={{ display: 'flex', alignItems: 'center' }}>
                             {!isAuth ? (

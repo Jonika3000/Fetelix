@@ -1,0 +1,12 @@
+.AboutUs{
+    text-align: center;
+}
+
+.AboutUs h1{
+    color: rgb(155, 34, 34);
+    text-shadow: rgba(152, 12, 51) 1px 0 10px;;
+}
+
+.ShareDiv button{
+    margin-right: 5px;
+} 
